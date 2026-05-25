@@ -1,7 +1,6 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
 }
 
 android {
@@ -70,10 +69,9 @@ dependencies {
     // ViewModel
     implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.8.6'
 
-    // Room Database (Memory Bank)
+    // Room Database
     implementation 'androidx.room:room-runtime:2.6.1'
     implementation 'androidx.room:room-ktx:2.6.1'
-    kapt 'androidx.room:room-compiler:2.6.1'
 
     // Networking (Grok API)
     implementation 'com.squareup.okhttp3:okhttp:4.12.0'
@@ -85,9 +83,6 @@ dependencies {
 
     // DataStore (Settings/API Key)
     implementation 'androidx.datastore:datastore-preferences:1.1.1'
-
-    // Bluetooth (Ray-Ban Meta)
-    implementation 'androidx.bluetooth:bluetooth:1.0.0-alpha02'
 
     // Speech Recognition
     implementation 'androidx.core:core-ktx:1.13.1'
