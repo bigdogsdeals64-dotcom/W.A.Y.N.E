@@ -19,6 +19,16 @@ jobs:
           distribution: temurin
           java-version: 17
 
+      - name: Verify Gradle files
+        working-directory: WAYNE
+        run: |
+          echo "--- app/build.gradle ---"
+          sed -n '1,120p' app/build.gradle
+          echo "--- root build.gradle ---"
+          sed -n '1,80p' build.gradle
+          echo "--- searching for kapt ---"
+          grep -R "kapt" -n . || true
+
       - name: Build debug APK
         working-directory: WAYNE
         run: |
