@@ -1,8 +1,10 @@
 package com.wayne.assistant.bluetooth
 
+import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 
+@SuppressLint("MissingPermission")
 class GlassesManager {
     private val bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
 
