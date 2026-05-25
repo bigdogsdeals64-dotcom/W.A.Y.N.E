@@ -15,6 +15,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,12 +23,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AutoAwesome
-import androidx.compose.material.icons.filled.Bluetooth
 import androidx.compose.material.icons.filled.Chat
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Memory
@@ -60,9 +59,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContent {
-            ForcedWayneHudApp()
-        }
+        setContent { ForcedWayneHudApp() }
     }
 }
 
@@ -75,20 +72,11 @@ private val HudMuted = Color(0xFF9E9E9E)
 
 @Composable
 private fun ForcedWayneHudApp() {
-    Scaffold(
-        containerColor = HudBlack,
-        bottomBar = { HudBottomBar() }
-    ) { padding ->
+    Scaffold(containerColor = HudBlack, bottomBar = { HudBottomBar() }) { padding ->
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .background(
-                    Brush.verticalGradient(
-                        listOf(Color(0xFF010101), Color(0xFF151107), Color(0xFF030303))
-                    )
-                )
-                .padding(18.dp),
+            modifier = Modifier.fillMaxSize().padding(padding).background(
+                Brush.verticalGradient(listOf(Color(0xFF010101), Color(0xFF151107), Color(0xFF030303)))
+            ).padding(18.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(18.dp)
         ) {
@@ -108,12 +96,7 @@ private fun ForcedWayneHudApp() {
                 HudTile("HUD", "LIVE", Modifier.weight(1f))
             }
             HudCard("CONFIRMATION") {
-                Text(
-                    "If you can see this black and gold HUD screen, the APK is finally running the new W.A.Y.N.E activity instead of the old purple setup screen.",
-                    color = HudText,
-                    fontSize = 14.sp,
-                    lineHeight = 20.sp
-                )
+                Text("This black and gold HUD confirms the APK is running the forced W.A.Y.N.E launcher activity.", color = HudText, fontSize = 14.sp, lineHeight = 20.sp)
             }
         }
     }
@@ -122,12 +105,7 @@ private fun ForcedWayneHudApp() {
 @Composable
 private fun HudCore() {
     val infinite = rememberInfiniteTransition(label = "forced_hud_core")
-    val rotation by infinite.animateFloat(
-        initialValue = 0f,
-        targetValue = 360f,
-        animationSpec = infiniteRepeatable(tween(6000, easing = LinearEasing)),
-        label = "rotation"
-    )
+    val rotation by infinite.animateFloat(0f, 360f, infiniteRepeatable(tween(6000, easing = LinearEasing)), label = "rotation")
     Box(modifier = Modifier.size(220.dp), contentAlignment = Alignment.Center) {
         Canvas(modifier = Modifier.fillMaxSize().rotate(rotation)) {
             val stroke = Stroke(width = 5.dp.toPx(), cap = StrokeCap.Round)
@@ -147,12 +125,8 @@ private fun HudCore() {
 }
 
 @Composable
-private fun HudCard(title: String, content: @Composable Column.() -> Unit) {
-    Card(
-        modifier = Modifier.fillMaxWidth().border(1.dp, HudGold.copy(alpha = .25f), RoundedCornerShape(22.dp)),
-        shape = RoundedCornerShape(22.dp),
-        colors = CardDefaults.cardColors(containerColor = HudPanel.copy(alpha = .95f))
-    ) {
+private fun HudCard(title: String, content: @Composable ColumnScope.() -> Unit) {
+    Card(modifier = Modifier.fillMaxWidth().border(1.dp, HudGold.copy(alpha = .25f), RoundedCornerShape(22.dp)), shape = RoundedCornerShape(22.dp), colors = CardDefaults.cardColors(containerColor = HudPanel.copy(alpha = .95f))) {
         Column(modifier = Modifier.padding(18.dp)) {
             Text(title, color = HudGold, fontWeight = FontWeight.Bold, fontSize = 16.sp)
             Spacer(modifier = Modifier.height(12.dp))
@@ -171,10 +145,7 @@ private fun HudRow(label: String, value: String) {
 
 @Composable
 private fun HudTile(value: String, label: String, modifier: Modifier = Modifier) {
-    Column(
-        modifier = modifier.background(HudPanel, RoundedCornerShape(18.dp)).border(1.dp, HudGold.copy(alpha = .2f), RoundedCornerShape(18.dp)).padding(14.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+    Column(modifier = modifier.background(HudPanel, RoundedCornerShape(18.dp)).border(1.dp, HudGold.copy(alpha = .2f), RoundedCornerShape(18.dp)).padding(14.dp), horizontalAlignment = Alignment.CenterHorizontally) {
         Text(value, color = HudGold, fontWeight = FontWeight.Bold, fontSize = 18.sp)
         Text(label, color = HudMuted, fontSize = 11.sp, textAlign = TextAlign.Center)
     }
@@ -185,16 +156,7 @@ private fun HudBottomBar() {
     NavigationBar(containerColor = Color(0xFF070707)) {
         val items = listOf(Icons.Default.Home, Icons.Default.Chat, Icons.Default.Memory, Icons.Default.Smartphone, Icons.Default.Settings)
         items.forEachIndexed { index, icon ->
-            NavigationBarItem(
-                selected = index == 0,
-                onClick = {},
-                icon = { Icon(icon, contentDescription = null) },
-                colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = HudGold,
-                    unselectedIconColor = HudMuted,
-                    indicatorColor = HudGold.copy(alpha = .12f)
-                )
-            )
+            NavigationBarItem(selected = index == 0, onClick = {}, icon = { Icon(icon, contentDescription = null) }, colors = NavigationBarItemDefaults.colors(selectedIconColor = HudGold, unselectedIconColor = HudMuted, indicatorColor = HudGold.copy(alpha = .12f)))
         }
     }
 }
