@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">W.A.Y.N.E.</string>
+    <string name="wayne_full_name">Wireless AI Your Neural Engine</string>
+    <string name="wake_word_default">hey wayne</string>
+    <string name="notification_channel_name">W.A.Y.N.E. Assistant</string>
+    <string name="notification_channel_desc">Background voice listener</string>
+    <string name="permission_mic_rationale">W.A.Y.N.E. needs microphone access to listen for your wake word and voice commands.</string>
+    <string name="permission_bluetooth_rationale">Bluetooth is needed to connect to your Ray-Ban Meta glasses for audio routing.</string>
+    <string name="permission_notification_rationale">Notifications are used to show the background service status.</string>
+</resources>
